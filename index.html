@@ -3,72 +3,63 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="AI-powered SDR interview preparation and company research assistant.">
+  <meta name="description" content="SDR Interview Copilot">
   <title>SDR Interview Copilot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <div class="brand"><span class="brand-mark">S</span> SDR Interview Copilot</div>
-      <div class="badge">AI-powered research</div>
-    </div>
-  </header>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">S</span><span>SDR Interview Copilot</span></div>
+      <div class="top-actions">
+        <span class="status-pill"><span class="status-dot"></span>Research ready</span>
+        <button id="newResearch" class="new-btn">＋ New company</button>
+      </div>
+    </header>
 
-  <main>
-    <section class="hero">
-      <div class="container">
-        <p class="eyebrow">PREP SMARTER</p>
-        <h1>Know the company.<br><span>Know what to say.</span></h1>
-        <p class="hero-copy">Enter a company name or website. The AI researcher turns public information into a simple SDR interview brief, likely pain points, questions, and a preparation plan.</p>
-
-        <form id="researchForm" class="search-card">
-          <label for="companyInput">Company name or website</label>
-          <div class="input-row">
-            <input id="companyInput" name="company" type="text" placeholder="e.g. Sprinto or https://sprinto.com" required>
-            <button id="researchBtn" type="submit">Research company →</button>
+    <main>
+      <section id="landing" class="landing">
+        <div class="landing-inner">
+          <div class="eyebrow">PREP SMARTER</div>
+          <h1>Know the company.<br><span>Know what to say.</span></h1>
+          <p class="hero-copy">Research a company and get a focused SDR interview brief — organized into bite-sized sections instead of one long page.</p>
+          <form id="researchForm" class="search-card">
+            <label for="companyInput">Company name or website</label>
+            <div class="input-row">
+              <input id="companyInput" name="company" type="text" placeholder="e.g. Sprinto or https://sprinto.com" required>
+              <button id="researchBtn" type="submit">Research company →</button>
+            </div>
+            <p class="helper">Tip: a website URL usually gives the researcher a clearer starting point.</p>
+          </form>
+          <div class="landing-features">
+            <span>Company intelligence</span><span>Sales context</span><span>Interview preparation</span>
           </div>
-          <p class="helper">Tip: a website URL usually gives the researcher a clearer starting point.</p>
-        </form>
-      </div>
-    </section>
-
-    <section id="loading" class="container hidden">
-      <div class="loading-card">
-        <div class="spinner"></div>
-        <div>
-          <strong>Researching the company…</strong>
-          <p>Checking public information and building your SDR interview brief.</p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="error" class="container hidden">
-      <div class="error-card">
-        <strong>Something went wrong.</strong>
-        <p id="errorText"></p>
-      </div>
-    </section>
+      <section id="loading" class="container hidden"><div class="loading-card"><div class="spinner"></div><div><strong>Researching the company…</strong><p>Checking public information and building your SDR interview brief.</p></div></div></section>
+      <section id="error" class="container hidden"><div class="error-card"><strong>Something went wrong.</strong><p id="errorText"></p></div></section>
 
-    <section id="results" class="container results hidden">
-      <div class="results-head">
-        <div>
-          <p class="eyebrow">YOUR INTERVIEW BRIEF</p>
-          <h2 id="companyTitle">Company research</h2>
+      <section id="workspace" class="workspace hidden">
+        <aside class="sidebar">
+          <div class="company-mini"><div class="company-avatar" id="companyAvatar">C</div><div><strong id="sidebarCompany">Company</strong><span>Interview brief</span></div></div>
+          <nav id="sideNav" class="side-nav" aria-label="Interview brief navigation"></nav>
+          <div class="sidebar-bottom"><span>Public research</span><small>Verify important facts before your interview.</small></div>
+        </aside>
+
+        <div class="content-area">
+          <div class="mobile-nav-wrap"><label for="mobileNav">Jump to</label><select id="mobileNav"></select></div>
+          <header class="content-header">
+            <div><p class="eyebrow">YOUR INTERVIEW BRIEF</p><h2 id="companyTitle">Company research</h2><p id="sectionSubtitle">Start with the overview.</p></div>
+            <div class="source-wrap"><button id="sourceToggle" class="source-toggle">Sources <span>⌄</span></button><div id="sourceLinks" class="source-links hidden"></div></div>
+          </header>
+          <div id="resultContent" class="result-content"></div>
         </div>
-        <button id="newResearch" class="secondary-btn">← New company</button>
-      </div>
+      </section>
+    </main>
 
-      <div id="sourceLinks" class="source-links"></div>
-      <div id="resultGrid" class="result-grid"></div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>Built as a simple prototype. Public information can change; verify important facts before an interview.</p>
-    </div>
-  </footer>
+    <footer><div class="container"><p>Built as a simple prototype. Public information can change; verify important facts before an interview.</p></div></footer>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>
