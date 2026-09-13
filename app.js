@@ -72,8 +72,7 @@ newResearch.addEventListener("click", () => {
   landing.classList.remove("hidden");
   errorBox.classList.add("hidden");
   input.focus();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+  });
 
 sourceToggle.addEventListener("click", () => sourceLinks.classList.toggle("hidden"));
 mobileNav.addEventListener("change", () => navigate(mobileNav.value));
@@ -143,7 +142,6 @@ function navigate(id, replace = false) {
   if (mobileNav.options.length) mobileNav.value = id;
   if (replace) history.replaceState(null, "", `#${id}`); else if (location.hash !== `#${id}`) history.pushState(null, "", `#${id}`);
   resultContent.querySelectorAll("a").forEach(a => a.setAttribute("target", "_blank"));
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+  }
 
 function groupFor(title) { const group = groups.find(g => g.items.includes(title)); return group ? group.label : "Interview brief"; }
