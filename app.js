@@ -13,6 +13,7 @@ const companyAvatar = document.getElementById("companyAvatar");
 const sectionSubtitle = document.getElementById("sectionSubtitle");
 const sourceLinks = document.getElementById("sourceLinks");
 const sourceToggle = document.getElementById("sourceToggle");
+const prepCta = document.getElementById("prepCta");
 const sideNav = document.getElementById("sideNav");
 const mobileNav = document.getElementById("mobileNav");
 const newResearch = document.getElementById("newResearch");
@@ -37,6 +38,7 @@ const subtitles = {
   "Market, customers & competitors": "Know the market, buyers and alternatives.",
   "What an SDR would likely sell": "Translate the company into an SDR conversation.",
   "Main pain points": "The problems prospects may care about most.",
+  "Prepare Me for This SDR Interview": "Your company-specific last-minute interview cheat sheet.",
   "Likely SDR interview questions": "Questions you should be ready to answer.",
   "How to prepare": "A practical preparation checklist.",
   "Your 60-second interview angle": "A concise way to position yourself.",
@@ -75,6 +77,7 @@ newResearch.addEventListener("click", () => {
   });
 
 sourceToggle.addEventListener("click", () => sourceLinks.classList.toggle("hidden"));
+prepCta.addEventListener("click", () => navigate("prepare-me-for-this-sdr-interview"));
 mobileNav.addEventListener("change", () => navigate(mobileNav.value));
 window.addEventListener("hashchange", () => { if (currentData) navigate(location.hash.slice(1) || "what-the-company-does"); });
 
@@ -117,6 +120,7 @@ function renderResults(data) {
   sectionsById = {};
   (data.sections || []).forEach((section, i) => { sectionsById[slugify(section.title || `section-${i + 1}`)] = section; });
   buildNavigation();
+  prepCta.classList.toggle("hidden", !sectionsById["prepare-me-for-this-sdr-interview"]);
   const first = groups[0].items.map(slugify).find(id => sectionsById[id]) || Object.keys(sectionsById)[0];
   navigate(location.hash.slice(1) && sectionsById[location.hash.slice(1)] ? location.hash.slice(1) : first, true);
 }
@@ -135,7 +139,7 @@ function buildNavigation() {
 function navigate(id, replace = false) {
   if (!sectionsById[id]) return;
   const section = sectionsById[id];
-  resultContent.innerHTML = `<article class="section-card"><div class="section-kicker">${escapeHtml(groupFor(section.title))}</div><h1>${escapeHtml(section.title)}</h1><p class="section-subtitle">${escapeHtml(subtitles[section.title] || "Your focused interview research.")}</p><div class="section-body">${markdownToHtml(section.content || "")}</div></article>`;
+  resultContent.innerHTML = `<article class="section-card ${section.featured ? "featured-section" : ""}"><div class="section-kicker">${section.featured ? "★ RECOMMENDED" : escapeHtml(groupFor(section.title))}</div><h1>${escapeHtml(section.title)}</h1><p class="section-subtitle">${escapeHtml(subtitles[section.title] || "Your focused interview research.")}</p><div class="section-body">${markdownToHtml(section.content || "")}</div></article>`;
   sectionSubtitle.textContent = subtitles[section.title] || "Your focused interview research.";
   document.querySelectorAll(".subnav-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.section === id));
   document.querySelectorAll(".nav-group").forEach(group => group.classList.toggle("active-group", group.querySelector(`[data-section="${CSS.escape(id)}"]`) !== null));
