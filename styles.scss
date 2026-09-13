@@ -1,0 +1,36 @@
+$ink: #172033;
+$muted: #687386;
+$line: #e5e9f0;
+$accent: #5b4bdb;
+$accent-dark: #493bb9;
+$bg: #f7f9fc;
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  color: $ink;
+  background: $bg;
+}
+
+.hero {
+  padding: 76px 0 44px;
+  background: linear-gradient(180deg, #fff 0%, $bg 100%);
+
+  h1 {
+    font-size: clamp(42px, 6vw, 70px);
+    line-height: 1.02;
+
+    span { color: $accent; }
+  }
+}
+
+button {
+  background: $accent;
+  color: white;
+  &:hover { background: $accent-dark; }
+}
+
+.result-card {
+  border: 1px solid $line;
+  border-radius: 16px;
+}
