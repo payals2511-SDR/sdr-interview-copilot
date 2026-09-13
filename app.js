@@ -77,7 +77,12 @@ newResearch.addEventListener("click", () => {
   });
 
 sourceToggle.addEventListener("click", () => sourceLinks.classList.toggle("hidden"));
-prepCta.addEventListener("click", () => navigate("prepare-me-for-this-sdr-interview"));
+prepCta.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const prepId = findSectionId("Prepare Me for This SDR Interview");
+  if (prepId) navigate(prepId);
+});
 mobileNav.addEventListener("change", () => navigate(mobileNav.value));
 window.addEventListener("hashchange", () => { if (currentData) navigate(location.hash.slice(1) || "what-the-company-does"); });
 
@@ -136,8 +141,18 @@ function buildNavigation() {
   mobileNav.innerHTML = groups.flatMap(group => group.items.filter(item => sectionsById[slugify(item)]).map(item => `<option value="${slugify(item)}">${escapeHtml(group.label)} — ${escapeHtml(item)}</option>`)).join("");
 }
 
+function findSectionId(title) {
+  const exact = slugify(title);
+  if (sectionsById[exact]) return exact;
+  return Object.keys(sectionsById).find(id => slugify(sectionsById[id]?.title || "") === exact) || null;
+}
+
 function navigate(id, replace = false) {
-  if (!sectionsById[id]) return;
+  id = findSectionId(id) || id;
+  if (!sectionsById[id]) {
+    resultContent.innerHTML = `<article class="section-card featured-section"><div class="section-kicker">★ RECOMMENDED</div><h1>Prepare Me for This SDR Interview</h1><p class="section-subtitle">The interview-prep section was not returned by the research service.</p><div class="section-body"><p>Run the company research again and this section will be generated from the company research.</p></div></article>`;
+    return;
+  }
   const section = sectionsById[id];
   resultContent.innerHTML = `<article class="section-card ${section.featured ? "featured-section" : ""}"><div class="section-kicker">${section.featured ? "★ RECOMMENDED" : escapeHtml(groupFor(section.title))}</div><h1>${escapeHtml(section.title)}</h1><p class="section-subtitle">${escapeHtml(subtitles[section.title] || "Your focused interview research.")}</p><div class="section-body">${markdownToHtml(section.content || "")}</div></article>`;
   sectionSubtitle.textContent = subtitles[section.title] || "Your focused interview research.";
