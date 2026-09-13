@@ -25,7 +25,7 @@ const groups = [
   { id: "overview", label: "Overview", icon: "⌂", items: ["What the company does", "Company snapshot"] },
   { id: "company", label: "Company", icon: "◈", items: ["Products / services", "Work culture & employee reviews", "Recent signals"] },
   { id: "market", label: "Market & Sales", icon: "◉", items: ["Market, customers & competitors", "What an SDR would likely sell", "Main pain points"] },
-  { id: "interview", label: "Interview Prep", icon: "✦", items: ["Likely SDR interview questions", "How to prepare", "Your 60-second interview angle"] },
+  { id: "interview", label: "Interview Prep", icon: "✦", items: ["Likely SDR interview questions", "How to prepare", "Prepare Me for This SDR Interview", "Your 60-second interview angle"] },
   { id: "finish", label: "Final Check", icon: "✓", items: ["Questions to ask the interviewer", "Things to verify before the interview"] }
 ];
 
@@ -120,7 +120,7 @@ function renderResults(data) {
   sectionsById = {};
   (data.sections || []).forEach((section, i) => { sectionsById[slugify(section.title || `section-${i + 1}`)] = section; });
   buildNavigation();
-  prepCta.classList.toggle("hidden", !sectionsById["prepare-me-for-this-sdr-interview"]);
+  prepCta.classList.remove("hidden");
   const first = groups[0].items.map(slugify).find(id => sectionsById[id]) || Object.keys(sectionsById)[0];
   navigate(location.hash.slice(1) && sectionsById[location.hash.slice(1)] ? location.hash.slice(1) : first, true);
 }
