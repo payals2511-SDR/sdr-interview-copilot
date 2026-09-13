@@ -2,7 +2,7 @@ import OpenAI from "openai";
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  timeout: 20000,
+  timeout: 60000,
   maxRetries: 0
 });
 
